@@ -1,0 +1,10 @@
+apiVersion: v1
+appVersion: 0.1.0
+description: carreiramais-wallet
+keywords:
+- carreiramais
+maintainers:
+- email: infra@carreiramais.app.be
+  name: carreiramais-wallet
+name: carreiramais-wallet
+version: 0.1.0

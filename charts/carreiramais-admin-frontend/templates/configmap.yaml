@@ -1,0 +1,11 @@
+{{- if .Values.carreiraMaisAdminFrontend.enabled }}
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ .Values.carreiraMaisAdminFrontend.name }}
+  namespace: {{ .Values.global.namespace }}
+data:
+  config.yaml: |
+    param: value
+
+{{- end}}

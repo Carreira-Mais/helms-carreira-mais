@@ -1,0 +1,99 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+autoscaling:
+  enabled: false
+  minReplicas: 3
+  maxReplicas: 10
+  ## targetCPUUtilizationPercentage only used if the cluster doesn't support autoscaling/v2beta
+  targetCPUUtilizationPercentage:
+  ## Otherwise for clusters that do support autoscaling/v2beta, use metrics
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 80
+
+global:
+  clusterDomain: cluster.local
+  updateStrategy: "RollingUpdate"
+  editor: "CarreiraMais"
+  namespace: "carreiramais"
+  domainName: "dev.example.com"
+  pullPolicy: Always
+  imagePullSecrets:
+  - name: regsecret
+
+  monitoring:
+    datadog:
+      enabled: false
+      env: env_name
+      tennant: client_name
+      debug: false
+
+  mongodb:
+    shared:
+      url: mongodb-shared.dev.example.com:27017
+      user: root
+      pass: mongodb
+#      prefix: mongodb+srv://
+      prefix: mongodb://
+    local:
+      url: mongodb-0.mongodb-headless.devtools.svc.cluster.local:27017,mongodb-1.mongodb-headless.devtools.svc.cluster.local:27017
+      user: root
+      pass: mongodb
+#      prefix: mongodb+srv://
+      prefix: mongodb://
+
+###################
+carreiraMaisAdminFrontend:
+  enabled: true
+  name: carreira-mais-admin-frontend
+  updateStrategy: "Recreate"
+  image:
+    repository: cmaisdockerimages.azurecr.io
+    name: carreira-mais-admin-frontend
+    tag: 865da20b00a5cbc3868491a73c1dcbaab9932ae9
+    pullPolicy: Always
+
+  replicaCount: 1
+
+  apiPort: 80
+
+  env:
+    - name: REACT_APP_BACKEND_URI
+      value: http://localhost:3000
+
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: "nginx"
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/affinity: "cookie"
+    hosts:
+      - host: carreiramais.dev.example.com
+        paths:
+          - /
+    tls:
+     - secretName: carreiramais.dev.example.com
+       hosts:
+         - carreiramais.dev.example.com
+
+
+  resources:
+    requests:
+      cpu: 10m
+      memory: 256Mi
+    limits:
+      cpu: 600m
+      memory: 600Mi
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}

@@ -1,0 +1,144 @@
+{{- if .Values.carreiraMaisFrontend.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.carreiraMaisFrontend.name }}
+  namespace: {{ .Values.global.namespace }}
+  {{- if .Values.global.monitoring.datadog.enabled }}
+  labels:
+    tags.datadoghq.com/env: "{{ .Values.global.monitoring.datadog.env }}"
+    tags.datadoghq.com/service: "{{ .Values.carreiraMaisFrontend.name }}"
+    tags.datadoghq.com/version: "{{ .Values.carreiraMaisFrontend.image.tag }}"
+  {{- end}}
+spec:
+  replicas: {{ .Values.carreiraMaisFrontend.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.carreiraMaisFrontend.name | quote }}
+  strategy:
+    type: {{ .Values.carreiraMaisFrontend.updateStrategy }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.carreiraMaisFrontend.name | quote }}
+      {{- if .Values.global.monitoring.datadog.enabled }}
+        tags.datadoghq.com/env: "{{ .Values.global.monitoring.datadog.env }}"
+        tags.datadoghq.com/service: "{{ .Values.carreiraMaisFrontend.name }}"
+        tags.datadoghq.com/version: "{{ .Values.carreiraMaisFrontend.image.tag }}"
+      {{- end}}
+    spec:
+      containers:
+      - name: {{ .Values.carreiraMaisFrontend.name | quote }}
+        image: {{ .Values.carreiraMaisFrontend.image.repository }}/{{ .Values.carreiraMaisFrontend.image.name }}:{{ .Values.carreiraMaisFrontend.image.tag }}
+        imagePullPolicy: {{ .Values.carreiraMaisFrontend.image.pullPolicy }}
+
+        env:
+        {{- with .Values.carreiraMaisFrontend.env }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+
+        # DATADOG ENV'S
+        {{- if .Values.global.monitoring.datadog.enabled }}
+        - name: DD_AGENT_HOST
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: DD_ENV
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['tags.datadoghq.com/env']
+        - name: DD_SERVICE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['tags.datadoghq.com/service']
+        - name: DD_VERSION
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['tags.datadoghq.com/version']
+        - name: DD_LOGS_INJECTION
+          value: "true"
+        - name: DD_TRACE_SAMPLE_RATE
+          value: "1"
+        - name: DD_PROFILING_ENABLED
+          value: "false"
+        - name: DD_TAGS
+          value: "tennant:{{ .Values.global.monitoring.datadog.tennant}}"
+        - name: DD_TRACE_DEBUG
+          value: "{{ .Values.global.monitoring.datadog.debug }}"
+        {{- end}}
+
+        command:
+          - /bin/sh
+        args:
+          - '-c'
+          - yarn start
+
+        ports:
+        - containerPort: {{ .Values.carreiraMaisFrontend.apiPort }}
+          protocol: TCP
+
+        {{- with .Values.carreiraMaisFrontend.resources }}
+        resources:
+          {{- toYaml . | nindent 12 }}
+        {{- end }}
+
+        {{- with .Values.carreiraMaisFrontend.readinessProbe }}
+        readinessProbe:
+          {{- toYaml . | nindent 12 }}
+        {{- end }}
+
+        {{- with .Values.carreiraMaisFrontend.livenessProbe }}
+        livenessProbe:
+          {{- toYaml . | nindent 12 }}
+        {{- end }}
+
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+
+        volumeMounts:
+          - name: config
+            readOnly: true
+            mountPath: /usr/app/config.yaml
+            subPath: smartfy.yaml
+
+      {{- with .Values.carreiraMaisFrontend.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+
+      {{- with .Values.carreiraMaisFrontend.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+
+      {{- with .Values.carreiraMaisFrontend.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+
+      dnsConfig:
+        options:
+          - name: ndots
+            value: '1'
+      dnsPolicy: ClusterFirst
+
+      restartPolicy: Always
+
+      schedulerName: default-scheduler
+
+      volumes:
+      - name: config
+        configMap:
+          name: {{ .Values.carreiraMaisFrontend.name }}
+          items:
+            - key: config.yaml
+              path: config.yaml
+          defaultMode: 420
+
+      {{- with .Values.global.imagePullSecrets }}
+      imagePullSecrets:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+status: {}
+{{- end}}

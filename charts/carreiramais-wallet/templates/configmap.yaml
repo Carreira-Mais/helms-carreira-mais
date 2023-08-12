@@ -1,0 +1,11 @@
+{{- if .Values.carreiraMaisWallet.enabled }}
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ .Values.carreiraMaisWallet.name }}
+  namespace: {{ .Values.global.namespace }}
+data:
+  config.yaml: |
+    param: value
+
+{{- end}}

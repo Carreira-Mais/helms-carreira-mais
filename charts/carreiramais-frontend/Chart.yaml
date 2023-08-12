@@ -1,0 +1,10 @@
+apiVersion: v1
+appVersion: 0.1.0
+description: carreiramais-frontend
+keywords:
+- carreiramais
+maintainers:
+- email: infra@carreiramais.app.be
+  name: carreiramais-frontend
+name: carreiramais-frontend
+version: 0.1.0
