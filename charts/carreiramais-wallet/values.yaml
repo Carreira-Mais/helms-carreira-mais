@@ -41,7 +41,7 @@ global:
 #      prefix: mongodb+srv://
       prefix: mongodb://
     local:
-      url: mongodb-0.mongodb-headless.devtools.svc.cluster.local:27017,mongodb-1.mongodb-headless.devtools.svc.cluster.local:27017
+      url: mongodb-0.mongodb-headless.carreiramais.svc.cluster.local:27017,mongodb-1.mongodb-headless.carreiramais.svc.cluster.local:27017
       user: root
       pass: mongodb
 #      prefix: mongodb+srv://

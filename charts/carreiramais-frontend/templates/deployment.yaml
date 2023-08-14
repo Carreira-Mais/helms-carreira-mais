@@ -99,7 +99,7 @@ spec:
           - name: config
             readOnly: true
             mountPath: /usr/app/config.yaml
-            subPath: smartfy.yaml
+            subPath: config.yaml
 
       {{- with .Values.carreiraMaisFrontend.nodeSelector }}
       nodeSelector:
