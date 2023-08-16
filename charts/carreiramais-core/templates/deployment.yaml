@@ -98,8 +98,8 @@ spec:
         volumeMounts:
           - name: config
             readOnly: true
-            mountPath: /usr/app/config.yaml
-            subPath: config.yaml
+            mountPath: /config/config.json
+            subPath: config.json
 
       {{- with .Values.carreiraMaisCore.nodeSelector }}
       nodeSelector:
@@ -131,8 +131,8 @@ spec:
         configMap:
           name: {{ .Values.carreiraMaisCore.name }}
           items:
-            - key: config.yaml
-              path: config.yaml
+            - key: config.json
+              path: config.json
           defaultMode: 420
 
       {{- with .Values.global.imagePullSecrets }}

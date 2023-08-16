@@ -5,7 +5,13 @@ metadata:
   name: {{ .Values.carreiraMaisCore.name }}
   namespace: {{ .Values.global.namespace }}
 data:
-  config.yaml: |
-    param: value
+  config.json: |
+    {
+      "featureApi": {
+        "baseUri": "/rewards-core/v1",
+        "autoDiscoveryFeatures": true,
+        "routes": []
+      }
+    }
 
 {{- end}}

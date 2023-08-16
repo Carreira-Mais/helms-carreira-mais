@@ -51,20 +51,20 @@ global:
 carreiraMaisFrontend:
   enabled: true
   name: carreira-mais-frontend
-  updateStrategy: "Recreate"
+  updateStrategy: "RollingUpdate"
   image:
     repository: cmaisdockerimages.azurecr.io
-    name: carreira-mais-admin-frontend
-    tag: 865da20b00a5cbc3868491a73c1dcbaab9932ae9
+    name: carreira-mais-frontend
+    tag: b1b08c23fb7b8a775b75c1a8f006e684174cbd9b
     pullPolicy: Always
 
   replicaCount: 1
 
-  apiPort: 80
+  apiPort: 3000
 
   env:
-    - name: REACT_APP_BACKEND_URI
-      value: http://localhost:3000
+    - name: BACKEND_URI
+      value: http://carreira-mais-core.carreiramais.svc.cluster.local:3000
 
   ingress:
     enabled: true
@@ -75,22 +75,41 @@ carreiraMaisFrontend:
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
       nginx.ingress.kubernetes.io/affinity: "cookie"
     hosts:
-      - host: carreiramais.dev.example.com
+      - host: client1.carreiramais.app.br
         paths:
           - /
     tls:
-     - secretName: carreiramais.dev.example.com
+     - secretName: client1.carreiramais.app.br
        hosts:
-         - carreiramais.dev.example.com
+         - client1.carreiramais.app.br
 
 
   resources:
     requests:
       cpu: 10m
-      memory: 256Mi
+      memory: 4000Mi
     limits:
-      cpu: 600m
-      memory: 600Mi
+      cpu: 1500m
+      memory: 4000Mi
+
+  readinessProbe:
+    tcpSocket:
+      port: 3000
+    initialDelaySeconds: 300
+    timeoutSeconds: 1
+    periodSeconds: 10
+    successThreshold: 1
+    failureThreshold: 5
+
+  livenessProbe:
+    tcpSocket:
+      port: 3000
+    initialDelaySeconds: 300
+    timeoutSeconds: 1
+    periodSeconds: 10
+    successThreshold: 1
+    failureThreshold: 3
+
 
   nodeSelector: {}
 

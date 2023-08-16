@@ -5,7 +5,13 @@ metadata:
   name: {{ .Values.carreiraMaisWallet.name }}
   namespace: {{ .Values.global.namespace }}
 data:
-  config.yaml: |
-    param: value
+  config.json: |
+    {
+      "featureApi": {
+        "baseUri": "/rewards-wallet/v1",
+        "autoDiscoveryFeatures": true,
+        "routes": []
+      }
+    }
 
 {{- end}}

@@ -71,7 +71,7 @@ spec:
           - /bin/sh
         args:
           - '-c'
-          - yarn start
+          - /opt/app/build.sh
 
         ports:
         - containerPort: {{ .Values.carreiraMaisFrontend.apiPort }}
