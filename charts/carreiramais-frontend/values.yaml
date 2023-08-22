@@ -26,6 +26,12 @@ global:
   imagePullSecrets:
   - name: regsecret
 
+  monitoring:
+    datadog:
+      enabled: false
+      env: env_name
+      tennant: client_name
+      debug: false
 
 ###################
 carreiraMaisFrontend:
