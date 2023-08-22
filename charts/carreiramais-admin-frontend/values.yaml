@@ -26,27 +26,6 @@ global:
   imagePullSecrets:
   - name: regsecret
 
-  monitoring:
-    datadog:
-      enabled: false
-      env: env_name
-      tennant: client_name
-      debug: false
-
-  mongodb:
-    shared:
-      url: mongodb-shared.dev.example.com:27017
-      user: root
-      pass: mongodb
-#      prefix: mongodb+srv://
-      prefix: mongodb://
-    local:
-      url: mongodb-0.mongodb-headless.carreiramais.svc.cluster.local:27017,mongodb-1.mongodb-headless.carreiramais.svc.cluster.local:27017
-      user: root
-      pass: mongodb
-#      prefix: mongodb+srv://
-      prefix: mongodb://
-
 ###################
 carreiraMaisAdminFrontend:
   enabled: true
