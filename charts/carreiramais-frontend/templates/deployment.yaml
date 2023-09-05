@@ -68,10 +68,10 @@ spec:
         {{- end}}
 
         command:
-          - /bin/sh
+          - nginx
         args:
-          - '-c'
-          - /opt/app/build.sh
+          - '-g'
+          - daemon off;
 
         ports:
         - containerPort: {{ .Values.carreiraMaisFrontend.apiPort }}
