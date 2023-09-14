@@ -60,6 +60,20 @@ entries:
     version: 0.1.0
   carreiramais-frontend:
   - apiVersion: v1
+    appVersion: 0.1.5
+    created: "2023-09-14T17:23:42.913236986Z"
+    description: carreiramais-frontend
+    digest: 9d7e3947146fd20e5164a3613b6ead1d8cd27ae6955c531f2cbfb2c82ca11447
+    keywords:
+    - carreiramais
+    maintainers:
+    - email: infra@carreiramais.app.br
+      name: carreiramais-frontend
+    name: carreiramais-frontend
+    urls:
+    - https://github.com/Carreira-Mais/helms-carreira-mais/releases/download/carreiramais-frontend-0.1.5/carreiramais-frontend-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v1
     appVersion: 0.1.4
     created: "2023-09-14T17:12:02.230307059Z"
     description: carreiramais-frontend
@@ -144,4 +158,4 @@ entries:
     urls:
     - https://github.com/Carreira-Mais/helms-carreira-mais/releases/download/carreiramais-wallet-0.1.0/carreiramais-wallet-0.1.0.tgz
     version: 0.1.0
-generated: "2023-09-14T17:12:02.23033126Z"
+generated: "2023-09-14T17:23:42.913271087Z"
