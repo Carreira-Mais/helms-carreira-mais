@@ -68,10 +68,9 @@ spec:
         {{- end}}
 
         command:
-          - nginx
+          - yarn
         args:
-          - '-g'
-          - daemon off;
+          - dev
 
         ports:
         - containerPort: {{ .Values.carreiraMaisFrontend.apiPort }}
