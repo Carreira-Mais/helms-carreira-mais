@@ -1,3 +1,7 @@
+2023-08-11 --- 0.1.5
+------------------------
+Deployment command include --host 0.0.0.0
+
 2023-08-11 --- 0.1.4
 ------------------------
 Change from Nginx image => yarn dev

@@ -71,6 +71,8 @@ spec:
           - yarn
         args:
           - dev
+          - '--host'
+          - 0.0.0.0
 
         ports:
         - containerPort: {{ .Values.carreiraMaisFrontend.apiPort }}
