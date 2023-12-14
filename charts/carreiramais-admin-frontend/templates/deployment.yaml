@@ -25,7 +25,13 @@ spec:
         tags.datadoghq.com/env: "{{ .Values.global.monitoring.datadog.env }}"
         tags.datadoghq.com/service: "{{ .Values.carreiraMaisAdminFrontend.name }}"
         tags.datadoghq.com/version: "{{ .Values.carreiraMaisAdminFrontend.image.tag }}"
+        admission.datadoghq.com/enabled: "true"
       {{- end}}
+      annotations:
+      {{- if .Values.global.monitoring.datadog.enabled }}
+        admission.datadoghq.com/java-lib.version: "latest"
+      {{- end}}
+
     spec:
       containers:
       - name: {{ .Values.carreiraMaisAdminFrontend.name | quote }}
