@@ -29,7 +29,7 @@ spec:
       {{- end}}
       annotations:
       {{- if .Values.global.monitoring.datadog.enabled }}
-        admission.datadoghq.com/java-lib.version: "latest"
+        admission.datadoghq.com/js-lib.version: "latest"
       {{- end}}
     spec:
       containers:
