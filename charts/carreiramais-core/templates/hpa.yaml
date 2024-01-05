@@ -1,6 +1,6 @@
 {{- if .Values.carreiraMaisCore.enabled }}
 {{- if .Values.autoscaling.enabled }}
-apiVersion: {{ .Capabilities.APIVersions.Has "autoscaling/v2beta2" | ternary "autoscaling/v2beta2" "autoscaling/v1" }}
+apiVersion: {{ .Capabilities.APIVersions.Has "autoscaling/v2" | ternary "autoscaling/v2" "autoscaling/v1" }}
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ .Values.carreiraMaisCore.name }}
@@ -13,7 +13,7 @@ spec:
     name: {{ .Values.carreiraMaisCore.name }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
-  {{- if not (.Capabilities.APIVersions.Has "autoscaling/v2beta2") }}
+  {{- if not (.Capabilities.APIVersions.Has "autoscaling/v2") }}
   targetCPUUtilizationPercentage: {{ .Values.autoscaling.targetCPUUtilizationPercentage | default 80 }}
   {{- else }}
   metrics:

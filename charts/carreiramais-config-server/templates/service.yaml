@@ -1,0 +1,18 @@
+{{- if .Values.carreiraMaisConfigServer.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ .Values.carreiraMaisConfigServer.name }}
+  name: {{ .Values.carreiraMaisConfigServer.name | quote }}
+  namespace: {{ .Values.global.namespace | quote }}
+spec:
+  ports:
+    - name: api
+      protocol: TCP
+      port: {{ .Values.carreiraMaisConfigServer.apiPort }}
+      targetPort: {{ .Values.carreiraMaisConfigServer.apiPort }}
+  selector:
+    app: {{ .Values.carreiraMaisConfigServer.name | quote }}
+
+{{- end }}

@@ -1,16 +1,16 @@
-{{- if .Values.carreiraMaisFrontend.enabled }}
+{{- if .Values.carreiraMaisConfigServer.enabled }}
 {{- if .Values.autoscaling.enabled }}
 apiVersion: {{ .Capabilities.APIVersions.Has "autoscaling/v2" | ternary "autoscaling/v2" "autoscaling/v1" }}
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ .Values.carreiraMaisFrontend.name }}
+  name: {{ .Values.carreiraMaisConfigServer.name }}
   namespace: {{ .Values.global.namespace }}
   labels:
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ .Values.carreiraMaisFrontend.name }}
+    name: {{ .Values.carreiraMaisConfigServer.name }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   {{- if not (.Capabilities.APIVersions.Has "autoscaling/v2") }}

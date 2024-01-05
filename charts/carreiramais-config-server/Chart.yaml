@@ -1,0 +1,10 @@
+apiVersion: v1
+appVersion: 0.1.0
+description: carreiramais-config-server
+keywords:
+- carreiramais
+maintainers:
+- email: infra@carreiramais.app.br
+  name: carreiramais-config-server
+name: carreiramais-config-server
+version: 0.1.0

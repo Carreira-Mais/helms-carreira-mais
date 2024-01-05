@@ -1,0 +1,75 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+autoscaling:
+  enabled: false
+  minReplicas: 3
+  maxReplicas: 10
+  ## targetCPUUtilizationPercentage only used if the cluster doesn't support autoscaling/v2beta
+  targetCPUUtilizationPercentage:
+  ## Otherwise for clusters that do support autoscaling/v2beta, use metrics
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 80
+
+global:
+  clusterDomain: cluster.local
+  updateStrategy: "RollingUpdate"
+  editor: "CarreiraMais"
+  namespace: "carreiramais"
+  domainName: "dev.example.com"
+  pullPolicy: Always
+  imagePullSecrets:
+  - name: regsecret
+
+  monitoring:
+    datadog:
+      enabled: false
+      env: env_name
+      tennant: client_name
+      debug: false
+
+###################
+carreiraMaisConfigServer:
+  enabled: true
+  name: carreira-mais-config-server
+  updateStrategy: "Recreate"
+  image:
+    repository: cmaisdockerimages.azurecr.io
+    name: carreira-mais-config-server
+    tag: 320e351f6e99b1257232c77f230393f30a55836d
+    pullPolicy: Always
+
+  replicaCount: 1
+
+  apiPort: 80
+
+  env:
+    - name: DATABASE_URL
+      value: postgresql://user:password@shared-postgresql.shared-postgresql.svc.cluster.local:5432/cmais-config-server?schemas=cmais-config-server
+    - name: CONTAINER_NAME
+      value: carreiramaisblobs
+    - name: ACCOUNT_NAME
+      value: carreiramais
+    - name: ACCOUNT_KEY
+      value: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/1D/Hrr2Y+TOI0avswCjm+AStp/SYnw=="
+    - name: CONNECTION_STRING
+      value: DefaultEndpointsProtocol=https;AccountName=carreiramais;AccountKey=Tm7um/XXXXXXXXXXXXXXXXXXXXXXXXXXX/EjRB4dyGqcelYEASqM8/1D/Hrr2Y+TOI0avswCjm+AStp/SYnw==;EndpointSuffix=core.windows.net
+
+  resources:
+    requests:
+      cpu: 10m
+      memory: 256Mi
+    limits:
+      cpu: 600m
+      memory: 600Mi
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}

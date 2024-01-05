@@ -1,0 +1,17 @@
+{{- if .Values.carreiraMaisConfigServer.enabled }}
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ .Values.carreiraMaisConfigServer.name }}
+  namespace: {{ .Values.global.namespace }}
+data:
+  config.json: |
+    {
+      "featureApi": {
+        "baseUri": "/rewards-configuration-server/v1",
+        "autoDiscoveryFeatures": true,
+        "routes": []
+      }
+    }
+
+{{- end}}
