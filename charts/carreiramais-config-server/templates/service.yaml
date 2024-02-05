@@ -12,6 +12,10 @@ spec:
       protocol: TCP
       port: {{ .Values.carreiraMaisConfigServer.apiPort }}
       targetPort: {{ .Values.carreiraMaisConfigServer.apiPort }}
+    - name: api2
+      protocol: TCP
+      port: {{ .Values.carreiraMaisConfigServer.apiPort2 }}
+      targetPort: {{ .Values.carreiraMaisConfigServer.apiPort2 }}
   selector:
     app: {{ .Values.carreiraMaisConfigServer.name | quote }}
 
