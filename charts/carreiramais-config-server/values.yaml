@@ -61,6 +61,24 @@ carreiraMaisConfigServer:
     - name: CONNECTION_STRING
       value: DefaultEndpointsProtocol=https;AccountName=carreiramais;AccountKey=Tm7um/XXXXXXXXXXXXXXXXXXXXXXXXXXX/EjRB4dyGqcelYEASqM8/1D/Hrr2Y+TOI0avswCjm+AStp/SYnw==;EndpointSuffix=core.windows.net
 
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: "nginx"
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/affinity: "cookie"
+    hosts:
+      - host: client1.admin.carreiramais.app.br
+        paths:
+          - /
+    tls:
+     - secretName: client1.admin.carreiramais.app.br
+       hosts:
+         - client1.admin.carreiramais.app.br
+
+
   resources:
     requests:
       cpu: 10m
