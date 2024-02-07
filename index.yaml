@@ -87,6 +87,20 @@ entries:
     version: 0.1.0
   carreiramais-config-server:
   - apiVersion: v1
+    appVersion: 0.1.2
+    created: "2024-02-07T01:36:54.885169746Z"
+    description: carreiramais-config-server
+    digest: 4da31653cfde6cfeb1c24b1c4561438788545dda6f190f6790e0ad7bc6863275
+    keywords:
+    - carreiramais
+    maintainers:
+    - email: infra@carreiramais.app.br
+      name: carreiramais-config-server
+    name: carreiramais-config-server
+    urls:
+    - https://github.com/Carreira-Mais/helms-carreira-mais/releases/download/carreiramais-config-server-0.1.2/carreiramais-config-server-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v1
     appVersion: 0.1.1
     created: "2024-02-06T01:04:00.171764578Z"
     description: carreiramais-config-server
@@ -355,4 +369,4 @@ entries:
     urls:
     - https://github.com/Carreira-Mais/helms-carreira-mais/releases/download/carreiramais-wallet-0.1.0/carreiramais-wallet-0.1.0.tgz
     version: 0.1.0
-generated: "2024-02-06T01:04:00.171809112Z"
+generated: "2024-02-07T01:36:54.885227643Z"
