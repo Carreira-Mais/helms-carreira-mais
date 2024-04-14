@@ -85,6 +85,21 @@ entries:
     urls:
     - https://github.com/Carreira-Mais/helms-carreira-mais/releases/download/carreiramais-admin-frontend-0.1.0/carreiramais-admin-frontend-0.1.0.tgz
     version: 0.1.0
+  carreiramais-conduct-channel:
+  - apiVersion: v1
+    appVersion: 0.1.2
+    created: "2024-04-14T15:25:31.545419451Z"
+    description: carreiramais-conduct-channel
+    digest: b2fe8c17365fa97f8a1f5f7ff7f081e1a2028ca55818d5e10e013018638601d8
+    keywords:
+    - carreiramais
+    maintainers:
+    - email: infra@carreiramais.app.br
+      name: carreiramais-conduct-channel
+    name: carreiramais-conduct-channel
+    urls:
+    - https://github.com/Carreira-Mais/helms-carreira-mais/releases/download/carreiramais-conduct-channel-0.1.0/carreiramais-conduct-channel-0.1.0.tgz
+    version: 0.1.0
   carreiramais-config-server:
   - apiVersion: v1
     appVersion: 0.1.2
@@ -369,4 +384,4 @@ entries:
     urls:
     - https://github.com/Carreira-Mais/helms-carreira-mais/releases/download/carreiramais-wallet-0.1.0/carreiramais-wallet-0.1.0.tgz
     version: 0.1.0
-generated: "2024-02-07T01:36:54.885227643Z"
+generated: "2024-04-14T15:25:31.545475315Z"
