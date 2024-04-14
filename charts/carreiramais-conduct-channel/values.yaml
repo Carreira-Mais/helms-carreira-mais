@@ -1,0 +1,97 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  ## targetCPUUtilizationPercentage only used if the cluster doesn't support autoscaling/v2beta
+  targetCPUUtilizationPercentage:
+  ## Otherwise for clusters that do support autoscaling/v2beta, use metrics
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 80
+
+global:
+  clusterDomain: cluster.local
+  updateStrategy: "RollingUpdate"
+  editor: "CarreiraMais"
+  namespace: "carreiramais"
+  domainName: "dev.example.com"
+  pullPolicy: Always
+  imagePullSecrets:
+  - name: regsecret
+
+  monitoring:
+    datadog:
+      enabled: false
+      env: env_name
+      tennant: client_name
+      debug: false
+
+###################
+carreiraMaisConductChannel:
+  enabled: true
+  name: carreira-mais-conduct-channel
+  updateStrategy: "Recreate"
+  image:
+    repository: cmaisdockerimages.azurecr.io
+    name: carreira-mais-conduct-channel
+    tag: 320e351f6e99b1257232c77f230393f30a55836d
+    pullPolicy: Always
+
+  replicaCount: 1
+
+  apiPort: 3004
+  apiPort2: 3005
+
+  env:
+    - name: DATABASE_URL
+      value: postgresql://user:password@shared-postgresql.shared-postgresql.svc.cluster.local:5432/cmais-conduct-channel?schemas=cmais-conduct-channel
+    - name: KEYCLOAK_REALM
+      value: "dev"
+    - name: KEYCLOAK_CLIENT_ID
+      value: "dev"
+    - name: KEYCLOAK_CLIENT_ID_ADMIN
+      value: "admin-cli"
+    - name: KEYCLOAK_SERVE_URL
+      value: "http://172.16.16.18:8082"
+    - name: KEYCLOAK_KEY_PUBLIC
+      value: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlnnWogY9ZnRKCeTfSsCO5OaJF3oYpWTOEd6duzLcI/OZ5cfFvak4IKYPkzhirE8mfVCBpegTCvH3RCoH9M49FI22e1HW3i+SM32oZyKpLEpaZSgx2GEshvRFgK6ryqBnGFeYJ1Zh8idXMVU4pcOzmZR0oQip1ccnSWT8KFJXzdTJc5VTYlYrOv0g4VEhk9ngsnm3o/SROy0p3it8qLtar18q1ZYg39gEmgYPyShnq9ozBj0VQISbhlGmciyj+Bxx4pasS/z0q4r09rt7ZY6D0ICfrcn3X2YtSDJsa3NdIwF7PkX1452ih6Rp+4r5bYUdDVIXqMX3VldDoXdye6x+KQIDAQAB"
+
+
+  ingress:
+    enabled: false
+    annotations:
+      kubernetes.io/ingress.class: "nginx"
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/affinity: "cookie"
+    hosts:
+      - host: client1.admin.carreiramais.app.br
+        paths:
+          - /
+    tls:
+     - secretName: client1.admin.carreiramais.app.br
+       hosts:
+         - client1.admin.carreiramais.app.br
+
+
+  resources:
+    requests:
+      cpu: 10m
+      memory: 256Mi
+    limits:
+      cpu: 600m
+      memory: 600Mi
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}

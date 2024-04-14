@@ -1,0 +1,11 @@
+{{- if .Values.carreiraMaisConductChannel.enabled }}
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ .Values.carreiraMaisConductChannel.name }}
+  namespace: {{ .Values.global.namespace }}
+data:
+  config.json: |
+    param: value
+
+{{- end}}

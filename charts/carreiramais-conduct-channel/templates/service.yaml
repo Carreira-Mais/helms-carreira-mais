@@ -1,0 +1,22 @@
+{{- if .Values.carreiraMaisConductChannel.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ .Values.carreiraMaisConductChannel.name }}
+  name: {{ .Values.carreiraMaisConductChannel.name | quote }}
+  namespace: {{ .Values.global.namespace | quote }}
+spec:
+  ports:
+    - name: api
+      protocol: TCP
+      port: {{ .Values.carreiraMaisConductChannel.apiPort }}
+      targetPort: {{ .Values.carreiraMaisConductChannel.apiPort }}
+    - name: api2
+      protocol: TCP
+      port: {{ .Values.carreiraMaisConductChannel.apiPort2 }}
+      targetPort: {{ .Values.carreiraMaisConductChannel.apiPort2 }}
+  selector:
+    app: {{ .Values.carreiraMaisConductChannel.name | quote }}
+
+{{- end }}
